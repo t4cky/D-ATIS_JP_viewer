@@ -34,14 +34,30 @@ AIRPORTS = [
 
 st.set_page_config(page_title="SWIM ATIS Viewer", layout="centered")
 
-# iOSでのキーボード自動起動を防止するCSS注入
+# カスタムCSS: 画面要素の完全制御
 st.markdown(
     """
     <style>
-    /* selectbox内部のinputに対する仮想フォーカス/キーボード起動を抑制 */
+    /* 1. iPhoneでのキーボード自動起動（フォーカス）を防止 */
     div[data-baseweb="select"] input {
         inputmode: none !important;
         pointer-events: none !important;
+    }
+    
+    # 2. ヘッダーリボン（Deployボタン・メニュー・ハンバーガーアイコン）を非表示
+    header[data-testid="stHeader"] {
+        display: none !important;
+    }
+    
+    # 3. フッター（右下の「Made with Streamlit」やGitHubリンク）を非表示
+    footer {
+        display: none !important;
+    }
+    
+    # 4. 画面上部の余白を調整してスッキリさせる
+    .block-container {
+        padding-top: 2rem !important;
+        padding-bottom: 2rem !important;
     }
     </style>
 """,
@@ -49,7 +65,7 @@ st.markdown(
 )
 
 # タイトル
-st.title("D-ATIS//JP")
+st.title("SWIM ATIS Viewer")
 
 
 # SWIM自動ログイン処理（Secretsから読み込み）
@@ -109,7 +125,7 @@ if sess:
         options,
         index=None,
         placeholder="タップして空港を選択...",
-        label_visibility="collapsed",  # ラベル文言を非表示にしてスッキリ配置
+        label_visibility="collapsed",
     )
 
     # 2. 結果表示（選択時のみ直下にそのままテキスト表示）
