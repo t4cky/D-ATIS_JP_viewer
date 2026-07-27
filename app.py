@@ -32,7 +32,7 @@ AIRPORTS = [
     ("ROIG", "ISHIGAKI"),
 ]
 
-st.set_page_config(page_title="SWIM ATIS Viewer", layout="centered")
+st.set_page_config(page_title="D-ATIS JAPAN", layout="centered")
 
 # カスタムCSS: 画面要素の完全制御
 st.markdown(
