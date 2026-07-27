@@ -49,7 +49,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-st.title("SWIM ATIS Viewer")
+st.title("D-ATIS VIEWER - RYOCC")
 
 
 # SWIM自動ログイン処理（Secretsから読み込み）
@@ -108,8 +108,8 @@ sess = get_swim_session()
 if sess:
     # 選択UI形式の切り替え
     ui_mode = st.radio(
-        "表示モード切替:",
-        ["ボタン選択 (iPad/PC向け)", "プルダウン選択 (スマホ向け)"],
+        "View Mode:",
+        ["Button Mode", "Pull-down Mode"],
         horizontal=True,
     )
 
