@@ -49,7 +49,7 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
-st.title("D-ATIS VIEWER - RYOCC")
+st.title("D-ATIS VIEWER // RYOCC")
 
 
 # SWIM自動ログイン処理（Secretsから読み込み）
