@@ -32,24 +32,10 @@ AIRPORTS = [
     ("ROIG", "ISHIGAKI"),
 ]
 
-st.set_page_config(page_title="SWIM ATIS Viewer", layout="wide")
+st.set_page_config(page_title="SWIM ATIS Viewer", layout="centered")
 
-# CSSによるボタン内テキストの2段折り返し＆スタイルデザイン設定
-st.markdown(
-    """
-<style>
-    div.stButton > button {
-        height: 60px !important;
-        white-space: pre-wrap !important; /* 改行を有効化 */
-        line-height: 1.2 !important;
-        padding: 4px 8px !important;
-    }
-</style>
-""",
-    unsafe_allow_html=True,
-)
-
-st.title("D-ATIS JP")
+# タイトル
+st.title("SWIM ATIS Viewer")
 
 
 # SWIM自動ログイン処理（Secretsから読み込み）
@@ -61,9 +47,7 @@ def get_swim_session():
         account_id = st.secrets["swim"]["account_id"]
         password = st.secrets["swim"]["password"]
     except Exception:
-        st.error(
-            "システムエラー: SWIM認証情報がSecretsに設定されていません。"
-        )
+        st.error("システムエラー: SWIM認証情報がSecretsに設定されていません。")
         return None
 
     sess = requests.Session()
@@ -93,9 +77,7 @@ def get_swim_session():
             st.session_state.session = sess
             return sess
         else:
-            st.error(
-                f"SWIMログインエラー (HTTP status: {resp.status_code})"
-            )
+            st.error(f"SWIMログインエラー (HTTP status: {resp.status_code})")
             return None
     except Exception as e:
         st.error(f"通信エラー: {e}")
@@ -106,43 +88,21 @@ def get_swim_session():
 sess = get_swim_session()
 
 if sess:
-    # 選択UI形式の切り替え
-    ui_mode = st.radio(
-        "View Mode:",
-        ["Button Mode", "Pull-down Mode"],
-        horizontal=True,
+    # 1. ドロップダウンボックス
+    options = [f"{icao} - {name}" for icao, name in AIRPORTS]
+    selected_option = st.selectbox(
+        "空港を選択してください:",
+        options,
+        index=None,
+        placeholder="タップして空港を選択...",
+        label_visibility="collapsed",  # ラベル文言を非表示にしてスッキリ配置
     )
 
-    selected_icao = None
+    # 2. 結果表示（選択時のみ直下にそのままテキスト表示）
+    if selected_option:
+        selected_icao = selected_option.split(" - ")[0]
 
-    # A) ボタン一覧モード
-    if "ボタン選択" in ui_mode:
-        cols = st.columns(5)
-        for idx, (icao, name) in enumerate(AIRPORTS):
-            col = cols[idx % 5]
-            # \nで改行を入れ、下段を小さめのフォント風にするテキスト構成
-            button_text = f"{icao}\n{name}"
-            if col.button(button_text, key=f"btn_{icao}", use_container_width=True):
-                selected_icao = icao
-
-    # B) プルダウンモード（スマホ推奨）
-    else:
-        options = [f"{icao} - {name}" for icao, name in AIRPORTS]
-        selected_option = st.selectbox(
-            "空港を選択してください:",
-            options,
-            index=None,
-            placeholder="タップして空港を選択...",
-        )
-        if selected_option:
-            selected_icao = selected_option.split(" - ")[0]
-
-    # --- ATISデータ表示エリア ---
-    if selected_icao:
-        st.divider()
-        st.subheader(f"ATIS Data: {selected_icao}")
-
-        with st.spinner("ATISを取得中..."):
+        with st.spinner(""):
             try:
                 resp = sess.get(
                     ATIS_URL,
