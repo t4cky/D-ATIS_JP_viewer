@@ -35,7 +35,7 @@ AIRPORTS = [
 st.set_page_config(page_title="SWIM ATIS Viewer", layout="centered")
 
 # タイトル
-st.title("SWIM ATIS Viewer")
+st.title("D-ATIS//JP")
 
 
 # SWIM自動ログイン処理（Secretsから読み込み）
