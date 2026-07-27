@@ -34,6 +34,20 @@ AIRPORTS = [
 
 st.set_page_config(page_title="SWIM ATIS Viewer", layout="centered")
 
+# iOSでのキーボード自動起動を防止するCSS注入
+st.markdown(
+    """
+    <style>
+    /* selectbox内部のinputに対する仮想フォーカス/キーボード起動を抑制 */
+    div[data-baseweb="select"] input {
+        inputmode: none !important;
+        pointer-events: none !important;
+    }
+    </style>
+""",
+    unsafe_allow_html=True,
+)
+
 # タイトル
 st.title("D-ATIS//JP")
 
