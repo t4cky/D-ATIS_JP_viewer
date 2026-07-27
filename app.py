@@ -65,7 +65,7 @@ st.markdown(
 )
 
 # タイトル
-st.title("SWIM ATIS Viewer")
+st.title("D-ATIS//JP")
 
 
 # SWIM自動ログイン処理（Secretsから読み込み）
