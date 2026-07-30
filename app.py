@@ -209,7 +209,7 @@ if sess:
                 if new_id:
                     st.session_state.atis_report_ids[selected_icao] = new_id
 
-                st.caption(f"最終更新チェック: {datetime.now().strftime('%H:%M:%S')}")
+                st.caption(f"Last Update: {datetime.now().strftime('%H:%M:%S')}")
 
                 for entry in atis_entries:
                     info_list = entry.get("atisInfo", entry.get("atisinfo", []))
