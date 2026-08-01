@@ -36,8 +36,8 @@ AIRPORTS = [
     ("ROIG", "ISHIGAKI"),
 ]
 
-# 自動更新の間隔（ミリ秒）。10分 = 600,000ms
-AUTO_REFRESH_INTERVAL_MS = 10 * 60 * 1000
+# 自動更新の間隔（ミリ秒）。5分 = 300,000ms
+AUTO_REFRESH_INTERVAL_MS = 5 * 60 * 1000
 
 st.set_page_config(page_title="D-ATIS JAPAN", layout="centered")
 
